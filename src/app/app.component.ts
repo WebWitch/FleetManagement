@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { environment } from "../environments/environment";
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +7,6 @@ import { environment } from "../environments/environment";
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  env = environment.environment;
-  title = environment.url;
+  title = 'Fleet Management';
+  env = environment.production ? null : environment.environment;
 }

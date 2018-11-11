@@ -1,20 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BannerComponent } from './banner/banner.component';
+import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { LoggerService } from './service/logger.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BannerComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [LoggerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
