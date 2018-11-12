@@ -4,7 +4,7 @@ import { LoggerService } from './logger.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Manager } from '../models/manager.model';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, tap, first } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,12 +20,44 @@ export class ManagerService {
     private http: HttpClient
     ) { }
 
+  /**
+   * GET managers from the server
+   */
   getAll(): Observable<Manager[]> {
-    this.logger.log('ManagerService: call to getAll()', this.url);
     return this.http.get<Manager[]>(this.url)
       .pipe(
-        tap(_ => this.logger.log('fetched managers')),
+        tap(_ => this.logger.log('ManagerService: getAll()')),
         catchError(this.handleError('getAll', []))
+      );
+  }
+
+  /**
+   * GET a user by username
+   * @param username Unique username
+   */
+  getUsername(username: string): Observable<Manager> {
+    return this.http.get<Manager>(this.url)
+      .pipe(
+        first(managers => managers.username === username),
+        tap(_ => this.logger.log(`ManagerService: getUsername('${username}')`)),
+        catchError(this.handleError<Manager>('getUsername', null))
+      );
+  }
+
+  /**
+   * GET a list of managers by username (or partial username)
+   * @param term Name (or partial name) to search for
+   */
+  searchManagers(term: string): Observable<Manager[]> {
+    if (!term.trim()) {
+      return this.getAll();
+    }
+
+    return this.http.get<Manager[]>(this.url)
+      .pipe(
+        map(managers => managers.filter(manager => manager.username.includes(term))),
+        tap(_ => this.logger.log(`ManagerService: searchManagers('${term}')`)),
+        catchError(this.handleError('getManagers', []))
       );
   }
 

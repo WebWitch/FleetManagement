@@ -1,6 +1,10 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <mat-toolbar id="header-toolbar">
   <span class="fill">{{ title }}</span>
   <span *ngIf="env">Environment: {{ env | uppercase }}</span>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<div id="main-container" class="mat-app-background basic-container">
+  <router-outlet></router-outlet>
+</div>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ManagerService } from '../../service/manager.service';
 import { LoggerService } from '../../service/logger.service';
+import { Manager } from '../../models/manager.model';
+import { Subject, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -16,12 +19,26 @@ export class DashboardComponent implements OnInit {
     ) { }
 
   managerNames: string[] = [];
+  sessionManager$: Observable<Manager>;
+  private searchUsernames = new Subject<string>();
 
   ngOnInit() {
     this.managerService.getAll().subscribe(managers => {
       this.logger.log('DashboardComponent: Got managers', managers);
       this.managerNames = managers.map(manager => manager.username);
     });
+    this.sessionManager$ = this.searchUsernames.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((username: string) => this.findManager(username))
+    );
   }
 
+  search(username: string): void {
+    this.searchUsernames.next(username);
+  }
+
+  findManager(username: string) {
+    return this.managerService.getUsername(username);
+  }
 }
