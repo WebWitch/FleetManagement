@@ -7,9 +7,10 @@
     </button>
   </mat-form-field>
   <mat-grid-list cols="2" rowHeight="100px">
+    <mat-grid-tile>Username</mat-grid-tile><mat-grid-tile>Actions</mat-grid-tile>
     <div *ngFor="let manager of managers$ | async">
-      <mat-grid-tile>Username</mat-grid-tile>
       <mat-grid-tile>{{ manager.username }}</mat-grid-tile>
+      <mat-grid-tile>Actions TBD</mat-grid-tile>
     </div>
   </mat-grid-list>
 </div>
