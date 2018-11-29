@@ -6,6 +6,6 @@ import { Vehicle } from './vehicle.model';
 export class Manager {
   username: string;
   password: string;
-  name: string;
+  email: string;
   vehicles: Vehicle[];
 }
