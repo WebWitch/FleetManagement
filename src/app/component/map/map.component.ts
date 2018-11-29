@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { FlatCoordinates } from 'src/app/models/flat-coordinates.model';
 
 @Component({
@@ -9,7 +9,7 @@ import { FlatCoordinates } from 'src/app/models/flat-coordinates.model';
 })
 export class MapComponent implements OnInit {
   title = 'AGM Project';
-  public coordinates$: FlatCoordinates[];
+  public coordinates$: Observable<FlatCoordinates[]>;
   public isuCoords: FlatCoordinates = {
     latitude: 42.0149975,
     longitude: -93.6457346
@@ -18,6 +18,7 @@ export class MapComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.getCoordinates();
   }
 
   getCoordinates() {
@@ -29,9 +30,7 @@ export class MapComponent implements OnInit {
       { latitude: 42.0149975, longitude: -93.6457346 }
     ];
 
-    of(coordinateMockArr).subscribe(coords => {
-      this.coordinates$ = coords;
-    });
+    this.coordinates$ = of(coordinateMockArr);
   }
 
 }
