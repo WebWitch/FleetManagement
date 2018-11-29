@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
@@ -12,6 +11,9 @@ import { MatInputModule } from '@angular/material/input';
 import { LoggerService } from './service/logger.service';
 import { ManagerListComponent } from './component/manager/manager-list/manager-list.component';
 import { ManagerVehiclesComponent } from './component/manager/manager-vehicles/manager-vehicles.component';
+import { MapComponent } from './component/map/map.component';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { ManagerVehiclesComponent } from './component/manager/manager-vehicles/m
     DashboardComponent,
     ManagerListComponent,
     ManagerVehiclesComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,10 @@ import { ManagerVehiclesComponent } from './component/manager/manager-vehicles/m
     MatIconModule,
     MatButtonModule,
     MatGridListModule,
-    HttpClientModule
+    HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.keys.agm
+    })
   ],
   providers: [LoggerService],
   bootstrap: [AppComponent]
