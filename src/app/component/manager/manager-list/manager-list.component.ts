@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ManagerService } from '../../../service/manager.service';
 import { Manager } from '../../../models/manager.model';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -13,8 +13,9 @@ export class ManagerListComponent implements OnInit {
 
   constructor(private managerService: ManagerService) { }
 
-  private searchTerms = new Subject<string>();
+  private searchTerms = new BehaviorSubject<string>('');
   managers$: Observable<Manager[]>;
+  managerCount: 20;
 
   ngOnInit() {
     this.managers$ = this.searchTerms.pipe(
