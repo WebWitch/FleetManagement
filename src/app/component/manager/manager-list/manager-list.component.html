@@ -8,11 +8,11 @@
   </mat-form-field>
   <mat-grid-list cols="2" rowHeight="100px">
     <mat-grid-tile-header>
-      <mat-grid-tile>Username</mat-grid-tile><mat-grid-tile>Actions</mat-grid-tile>
+      <mat-grid-tile>Username</mat-grid-tile><mat-grid-tile>Details</mat-grid-tile>
     </mat-grid-tile-header>
     <div *ngFor="let manager of managers$ | async">
       <mat-grid-tile>{{ manager.username }}</mat-grid-tile>
-      <mat-grid-tile>Actions TBD</mat-grid-tile>
+      <mat-grid-tile><app-manager-vehicles [vehicles]="manager.vehicles"></app-manager-vehicles></mat-grid-tile>
     </div>
   </mat-grid-list>
 </div>

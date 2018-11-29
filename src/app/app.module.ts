@@ -11,14 +11,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { LoggerService } from './service/logger.service';
 import { ManagerListComponent } from './component/manager/manager-list/manager-list.component';
-import { ManagerDetailsComponent } from './component/manager/manager-details/manager-details.component';
+import { ManagerVehiclesComponent } from './component/manager/manager-vehicles/manager-vehicles.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     ManagerListComponent,
-    ManagerDetailsComponent,
+    ManagerVehiclesComponent,
   ],
   imports: [
     BrowserModule,
