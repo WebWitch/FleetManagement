@@ -16,6 +16,7 @@ import { MapComponent } from './component/map/map.component';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import { FormsModule } from '@angular/forms';
+import { RawDataReportComponent } from './component/raw/raw-data-report/raw-data-report.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FormsModule } from '@angular/forms';
     ManagerListComponent,
     ManagerVehiclesComponent,
     MapComponent,
+    RawDataReportComponent,
   ],
   imports: [
     BrowserModule,
