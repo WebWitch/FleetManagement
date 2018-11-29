@@ -27,7 +27,7 @@ export class ManagerService {
   getAll(): Observable<Manager[]> {
     return this.http.get<Manager[]>(this.url)
       .pipe(
-        tap(_ => this.logger.log('ManagerService: getAll()')),
+        tap(() => this.logger.log('ManagerService: getAll()')),
         catchError(this.handleError('getAll', []))
       );
   }
@@ -40,7 +40,7 @@ export class ManagerService {
     return this.http.get<Manager>(this.url)
       .pipe(
         first(managers => managers.username === username),
-        tap(_ => this.logger.log(`ManagerService: getUsername('${username}')`)),
+        tap(() => this.logger.log(`ManagerService: getUsername('${username}')`)),
         catchError(this.handleError<Manager>('getUsername', null))
       );
   }
@@ -57,7 +57,7 @@ export class ManagerService {
     return this.http.get<Manager[]>(this.url)
       .pipe(
         map(managers => managers.filter(manager => manager.username.includes(term))),
-        tap(_ => this.logger.log(`ManagerService: searchManagers('${term}')`)),
+        tap(() => this.logger.log(`ManagerService: searchManagers('${term}')`)),
         catchError(this.handleError('getManagers', []))
       );
   }
@@ -75,7 +75,7 @@ export class ManagerService {
     manager.password = password;
 
     return this.http.put<Manager>(this.url, manager, httpOptions).pipe(
-      tap(() => this.logger.log(`added manager username=${manager.username}`)),
+      tap(() => this.logger.log(`ManagerService: added manager username=${manager.username}`)),
       catchError(this.handleError<Manager>('addManager'))
     );
   }
@@ -86,7 +86,7 @@ export class ManagerService {
    */
   getManagerVehicles(manager: Manager): Observable<Vehicle[]> {
     return this.http.get<Vehicle[]>(this.url + '/' + manager.username).pipe(
-      tap(vehicles => this.logger.log(`got vehicles for manager=${manager.username}`, vehicles)),
+      tap(vehicles => this.logger.log(`ManagerService: got vehicles for manager=${manager.username}`, vehicles)),
       catchError(this.handleError<Vehicle[]>('getManagerVehicles'))
     );
   }
@@ -97,8 +97,8 @@ export class ManagerService {
    * @param vehicle Vehicle to add to a manager.
    */
   associateVehicle(manager: Manager, vehicle: Vehicle): Observable<Vehicle[]> {
-    return this.http.put<Vehicle[]>(this.url + '/' + manager, vehicle.uid).pipe(
-      tap(() => this.logger.log(`added vehicle ${vehicle.uid} for manager=${manager.username}`)),
+    return this.http.put<Vehicle[]>(this.url + '/' + manager, vehicle.uid, httpOptions).pipe(
+      tap(() => this.logger.log(`ManagerService: added vehicle ${vehicle.uid} for manager=${manager.username}`)),
       catchError(this.handleError<Vehicle[]>('associateVehicle'))
     );
   }

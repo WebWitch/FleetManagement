@@ -5,9 +5,9 @@ import { VehicleData } from './vehicle-data.model';
  */
 export class Vehicle {
   uid: Number;
-  mrLat: Number;
-  mrLong: Number;
-  mrSpeed: Number;
-  mrGas: Number;
+  latitude: Number;
+  longitude: Number;
+  speed: Number;
+  gas: Number;
   data: VehicleData[];
 }
