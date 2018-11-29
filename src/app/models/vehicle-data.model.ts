@@ -3,8 +3,8 @@
  */
 export class VehicleData {
   date: Date;
-  speed: Number;
-  gas: Number;
-  longitude: Number;
-  latitude: Number;
+  speed: number;
+  gas: number;
+  longitude: number;
+  latitude: number;
 }
