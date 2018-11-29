@@ -1,5 +1,7 @@
-<agm-map [latitude]="42.0149975" [longitude]="-93.6457346" [zoom]="15">
-  <agm-marker [latitude]="isuCoords.latitude" [longitude]="-93.6457346">
+<agm-map [latitude]="isuCoords.latitude" [longitude]="isuCoords.longitude" [zoom]="15">
+  <agm-marker *ngFor="let loc of coordinates$ | async"
+    [latitude]="loc.latitude"
+    [longitude]="loc.longitude">
     <agm-info-window>ISU</agm-info-window>
   </agm-marker>
 </agm-map>
