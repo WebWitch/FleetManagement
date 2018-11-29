@@ -17,6 +17,7 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import { FormsModule } from '@angular/forms';
 import { RawDataReportComponent } from './component/raw/raw-data-report/raw-data-report.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { RawDataReportComponent } from './component/raw/raw-data-report/raw-data
     AgmCoreModule.forRoot({
       apiKey: environment.keys.agm
     }),
-    FormsModule
+    FormsModule,
+    MatMenuModule
   ],
   providers: [LoggerService],
   bootstrap: [AppComponent]

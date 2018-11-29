@@ -1,7 +1,16 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <mat-toolbar id="header-toolbar">
-  <span class="fill">{{ title }}</span>
+  <span class="fill">
+
+      <button mat-button [matMenuTriggerFor]="menu">{{ title }}</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/home">Home</button>
+        <button mat-menu-item routerLink="/map">Map</button>
+        <button mat-menu-item routerLink="/manager">Managers</button>
+        <button mat-menu-item routerLink="/raw">Raw Data</button>
+      </mat-menu>
+  </span>
   <span *ngIf="env">Environment: {{ env | uppercase }}</span>
 </mat-toolbar>
 
