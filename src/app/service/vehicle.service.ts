@@ -6,6 +6,7 @@ import { of, Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Vehicle } from '../models/vehicle.model';
 import { VehicleData } from '../models/vehicle-data.model';
+import { HttpUtilsService } from './http-utils.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,7 +20,8 @@ export class VehicleService {
   private url = environment.url + '/vehicle';
   constructor(
     private logger: LoggerService,
-    private http: HttpClient
+    private http: HttpClient,
+    private httpUtilsService: HttpUtilsService
   ) { }
 
   /**
@@ -29,7 +31,7 @@ export class VehicleService {
     return this.http.get<Vehicle[]>(this.url)
       .pipe(
         tap(() => this.logger.log('VehicleService: getAll()')),
-        catchError(this.handleError('getAll', []))
+        catchError(this.httpUtilsService.handleError('getAll', []))
       );
   }
 
@@ -41,7 +43,7 @@ export class VehicleService {
     return this.http.put<Vehicle>(this.url, vehicle, httpOptions)
       .pipe(
         tap(() => this.logger.log('ManagerService: addVehicle()', vehicle)),
-        catchError(this.handleError<Vehicle>('addVehicle'))
+        catchError(this.httpUtilsService.handleError<Vehicle>('addVehicle'))
       );
   }
 
@@ -53,7 +55,7 @@ export class VehicleService {
     return this.http.get<Vehicle>(this.url + '/' + uid)
       .pipe(
         tap(vehicle => this.logger.log(`VehicleService: getUid('${uid}')`, vehicle)),
-        catchError(this.handleError<Vehicle>('getUid', null))
+        catchError(this.httpUtilsService.handleError<Vehicle>('getUid', null))
       );
   }
 
@@ -65,7 +67,7 @@ export class VehicleService {
     return this.http.put<Vehicle>(this.url + '/' + vehicle.uid, vehicleData, httpOptions)
       .pipe(
         tap(() => this.logger.log(`VehicleService: updateVehicle(${vehicle.uid}, data)`, vehicleData, vehicle)),
-        catchError(this.handleError<Vehicle>('updateVehicle'))
+        catchError(this.httpUtilsService.handleError<Vehicle>('updateVehicle'))
       );
   }
 
@@ -77,22 +79,7 @@ export class VehicleService {
     return this.http.delete<Vehicle>(this.url + '/' + uid, httpOptions)
       .pipe(
         tap(() => this.logger.log(`VehicleService: delete vehicle uid=${uid}`)),
-        catchError(this.handleError<Vehicle>('deleteUid'))
+        catchError(this.httpUtilsService.handleError<Vehicle>('deleteUid'))
       );
-  }
-
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      this.logger.error(error);
-      this.logger.log(`ManagerService: ${operation} failed: ${error.message}`);
-
-      return of(result as T);
-    };
   }
 }

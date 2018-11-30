@@ -6,6 +6,7 @@ import { Manager } from '../models/manager.model';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap, first } from 'rxjs/operators';
 import { Vehicle } from '../models/vehicle.model';
+import { HttpUtilsService } from './http-utils.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,8 +19,9 @@ export class ManagerService {
   private url = environment.url + '/manager';
   constructor(
     private logger: LoggerService,
-    private http: HttpClient
-    ) { }
+    private http: HttpClient,
+    private httpUtilsService: HttpUtilsService
+  ) { }
 
   /**
    * GET managers from the server
@@ -28,7 +30,7 @@ export class ManagerService {
     return this.http.get<Manager[]>(this.url)
       .pipe(
         tap(() => this.logger.log('ManagerService: getAll()')),
-        catchError(this.handleError('getAll', []))
+        catchError(this.httpUtilsService.handleError('getAll', []))
       );
   }
 
@@ -41,7 +43,7 @@ export class ManagerService {
       .pipe(
         first(managers => managers.username === username),
         tap(() => this.logger.log(`ManagerService: getUsername('${username}')`)),
-        catchError(this.handleError<Manager>('getUsername', null))
+        catchError(this.httpUtilsService.handleError<Manager>('getUsername', null))
       );
   }
 
@@ -58,7 +60,7 @@ export class ManagerService {
       .pipe(
         map(managers => managers.filter(manager => manager.username.includes(term))),
         tap(() => this.logger.log(`ManagerService: searchManagers('${term}')`)),
-        catchError(this.handleError('getManagers', []))
+        catchError(this.httpUtilsService.handleError('getManagers', []))
       );
   }
 
@@ -76,7 +78,7 @@ export class ManagerService {
 
     return this.http.put<Manager>(this.url, manager, httpOptions).pipe(
       tap(() => this.logger.log(`ManagerService: added manager username=${manager.username}`)),
-      catchError(this.handleError<Manager>('addManager'))
+      catchError(this.httpUtilsService.handleError<Manager>('addManager'))
     );
   }
 
@@ -87,7 +89,7 @@ export class ManagerService {
   getManagerVehicles(manager: Manager): Observable<Vehicle[]> {
     return this.http.get<Vehicle[]>(this.url + '/' + manager.username).pipe(
       tap(vehicles => this.logger.log(`ManagerService: got vehicles for manager=${manager.username}`, vehicles)),
-      catchError(this.handleError<Vehicle[]>('getManagerVehicles'))
+      catchError(this.httpUtilsService.handleError<Vehicle[]>('getManagerVehicles'))
     );
   }
 
@@ -99,22 +101,7 @@ export class ManagerService {
   associateVehicle(manager: Manager, vehicle: Vehicle): Observable<Vehicle[]> {
     return this.http.put<Vehicle[]>(this.url + '/' + manager, vehicle.uid, httpOptions).pipe(
       tap(() => this.logger.log(`ManagerService: added vehicle ${vehicle.uid} for manager=${manager.username}`)),
-      catchError(this.handleError<Vehicle[]>('associateVehicle'))
+      catchError(this.httpUtilsService.handleError<Vehicle[]>('associateVehicle'))
     );
-  }
-
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      this.logger.error(error);
-      this.logger.log(`ManagerService: ${operation} failed: ${error.message}`);
-
-      return of(result as T);
-    };
   }
 }
