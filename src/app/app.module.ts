@@ -18,6 +18,13 @@ import { environment } from 'src/environments/environment';
 import { FormsModule } from '@angular/forms';
 import { RawDataReportComponent } from './component/raw/raw-data-report/raw-data-report.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AddComponent } from './component/manager/add/add.component';
+import { EditComponent } from './component/manager/edit/edit.component';
+import { ListComponent } from './component/manager/list/list.component';
+import { AddManagerComponent } from './component/manager/add-manager/add-manager.component';
+import { EditManagerComponent } from './component/manager/edit-manager/edit-manager.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +34,11 @@ import { MatMenuModule } from '@angular/material/menu';
     ManagerVehiclesComponent,
     MapComponent,
     RawDataReportComponent,
+    AddComponent,
+    EditComponent,
+    ListComponent,
+    AddManagerComponent,
+    EditManagerComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +55,9 @@ import { MatMenuModule } from '@angular/material/menu';
       apiKey: environment.keys.agm
     }),
     FormsModule,
-    MatMenuModule
+    MatMenuModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
   providers: [LoggerService],
   bootstrap: [AppComponent]
