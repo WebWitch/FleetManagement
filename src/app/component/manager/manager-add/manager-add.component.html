@@ -1,0 +1,31 @@
+<div class="manager-add container">
+  <h1>Add a Manager</h1>
+  <form #managerForm="ngForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username" name="username" [(ngModel)]="manager.username" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" name="email" [(ngModel)]="manager.email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="text" class="form-control" id="password" name="password" [(ngModel)]="manager.password" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+
+  </form>
+
+  <div [hidden]="!submitted">
+    <h2>Successfully submitted manager:</h2>
+    <ul>
+      <li>Username: {{ manager.username }}</li>
+      <li>Email: {{ manager.email }}</li>
+      <li>Password: {{ manager.password }}</li>
+    </ul>
+  </div>
+</div>

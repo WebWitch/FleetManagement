@@ -15,9 +15,10 @@ import { ManagerVehiclesComponent } from './component/manager/manager-vehicles/m
 import { MapComponent } from './component/map/map.component';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RawDataReportComponent } from './component/raw/raw-data-report/raw-data-report.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { ManagerAddComponent } from './component/manager/manager-add/manager-add.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { MatMenuModule } from '@angular/material/menu';
     ManagerVehiclesComponent,
     MapComponent,
     RawDataReportComponent,
+    ManagerAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import { MatMenuModule } from '@angular/material/menu';
       apiKey: environment.keys.agm
     }),
     FormsModule,
-    MatMenuModule
+    MatMenuModule,
+    ReactiveFormsModule
   ],
   providers: [LoggerService],
   bootstrap: [AppComponent]
