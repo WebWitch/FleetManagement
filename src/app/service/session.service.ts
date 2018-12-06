@@ -59,12 +59,11 @@ export class SessionService {
   /**
    * Register a new manager.
    * @param username The username of the manager.
-   * @param email The email of the manager.
    * @param password The plaintext password of the manager.
    * @returns True if the user is now authenticated, false otherwise.
    */
-  register(username, email, password): boolean {
-    this.managerService.addManager(username, email, password).subscribe(manager => {
+  register(username, password): boolean {
+    this.managerService.addManager(username, password).subscribe(manager => {
       this.manager = manager;
       this._isAuthenticated = true;
     });

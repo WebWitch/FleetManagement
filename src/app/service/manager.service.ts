@@ -67,16 +67,14 @@ export class ManagerService {
   /**
    * PUT a new manager to the server
    * @param username The manager's username.
-   * @param email The manager's email.
    * @param password The manager's plaintext password.
    */
-  addManager(username: string, email: string, password: string): Observable<Manager> {
+  addManager(username: string, password: string): Observable<Manager> {
     const manager = new Manager();
     manager.username = username;
-    manager.email = email;
     manager.password = password;
 
-    return this.http.put<Manager>(this.url, manager, httpOptions).pipe(
+    return this.http.post<Manager>(this.url, manager, httpOptions).pipe(
       tap(() => this.logger.log(`ManagerService: added manager username=${manager.username}`)),
       catchError(this.httpUtilsService.handleError<Manager>('addManager'))
     );

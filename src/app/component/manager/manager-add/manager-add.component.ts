@@ -19,8 +19,8 @@ export class ManagerAddComponent implements OnInit {
   }
 
   onSubmit() {
-    this.managerService.addManager(this.manager.username, this.manager.email, this.manager.password)
-      .subscribe(manager => {
+    this.managerService.addManager(this.manager.username, this.manager.password)
+      .subscribe(() => {
         this.submitted = true;
       },
       err => {

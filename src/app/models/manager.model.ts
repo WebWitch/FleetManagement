@@ -6,6 +6,5 @@ import { ShadowVehicle } from './shadow-vehicle.model';
 export class Manager {
   username: string;
   password: string;
-  email: string;
   vehicles: ShadowVehicle[];
 }

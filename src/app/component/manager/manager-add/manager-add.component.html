@@ -7,11 +7,6 @@
     </div>
 
     <div class="form-group">
-      <label for="email">Email</label>
-      <input type="text" class="form-control" id="email" name="email" [(ngModel)]="manager.email" required>
-    </div>
-
-    <div class="form-group">
       <label for="password">Password</label>
       <input type="text" class="form-control" id="password" name="password" [(ngModel)]="manager.password" required>
     </div>
@@ -24,7 +19,6 @@
     <h2>Successfully submitted manager:</h2>
     <ul>
       <li>Username: {{ manager.username }}</li>
-      <li>Email: {{ manager.email }}</li>
       <li>Password: {{ manager.password }}</li>
     </ul>
   </div>
