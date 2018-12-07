@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService, LoggerService } from '@/services';
 
 @Component({
@@ -8,6 +8,7 @@ import { AuthService, LoggerService } from '@/services';
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
+  private redirectUri: string;
   public showSpinner = false;
 
   public user = {
@@ -17,11 +18,13 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private logger: LoggerService
   ) { }
 
   ngOnInit() {
+    this.redirectUri = this.route.snapshot.queryParams['redirectUri'];
   }
 
   /**
@@ -33,7 +36,7 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(this.user.email, this.user.password)
       .then(res => {
         this.logger.log('Logged in', res);
-        this.router.navigate(['/map']);
+        this.router.navigate([this.redirectUri || '/map']);
       }).catch(err => this.logger.error(err))
       .finally(() => this.showSpinner = false);
   }
@@ -42,6 +45,6 @@ export class LoginComponent implements OnInit {
    * Handle registration action.
    */
   register() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/register'], { queryParams: { redirectUri: this.redirectUri } } );
   }
 }

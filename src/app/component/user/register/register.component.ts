@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService, LoggerService } from '@/services';
 
 @Component({
@@ -8,7 +8,7 @@ import { AuthService, LoggerService } from '@/services';
   styleUrls: ['./register.component.less']
 })
 export class RegisterComponent implements OnInit {
-
+  private redirectUri: string;
   public email: string;
   public password: string;
   public confirmPassword: string;
@@ -16,11 +16,13 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private logger: LoggerService
   ) { }
 
   ngOnInit() {
+    this.redirectUri = this.route.snapshot.queryParams['redirectUri'];
   }
 
   /**
@@ -37,7 +39,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register(this.email, this.password)
       .then(res => {
         this.logger.log('Registered', res);
-        this.router.navigate(['/map']);
+        this.router.navigate([this.redirectUri || '/map']);
       }).catch(err =>
         this.logger.error(err)
       ).finally(() =>
