@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return this.userDetails != null;
+    return this.user != null;
   }
 
   async signIn(email: string, password: string) {
@@ -45,7 +45,7 @@ export class AuthService {
 
   logout() {
     this._firebaseAuth.auth.signOut();
+    this.user = null;
     this.userDetails = null;
-    this.router.navigate(['/']);
   }
 }

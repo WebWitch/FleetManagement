@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MapComponent } from '../component/map/map.component';
 import { LoginComponent } from '../component/user/login/login.component';
 import { RegisterComponent } from '../component/user/register/register.component';
-import { AuthGuard } from '@/helpers';
+import { AuthGuard } from '@/guards';
 
 const routes: Routes = [
   { path: '', redirectTo: '/map', pathMatch: 'full' },
