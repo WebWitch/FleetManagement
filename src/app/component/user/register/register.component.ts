@@ -24,6 +24,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Handle registration action.
+   * @todo Implement proper error and validation handling for the form.
+   */
   register(): void {
     this.showSpinner = true;
     if (this.password !== this.confirmPassword) {
@@ -31,8 +35,14 @@ export class RegisterComponent implements OnInit {
       return alert('Double check that passwords match.');
     }
 
-    this.authService.register(this.email, this.password).then(res => {
-      this.logger.log('Registered', res);
-    }).catch(err => this.logger.error(err)).finally(() => this.showSpinner = false);
+    this.authService.register(this.email, this.password)
+      .then(res => {
+        this.logger.log('Registered', res);
+        this.router.navigate(['/map']);
+      }).catch(err =>
+        this.logger.error(err)
+      ).finally(() =>
+        this.showSpinner = false
+      );
   }
 }
