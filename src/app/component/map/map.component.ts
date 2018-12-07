@@ -16,7 +16,7 @@ export class MapComponent implements OnInit {
     latitude: 42.027383,
     longitude: -93.646497
   };
-  public iconUri = "assets/bus.png";
+  public iconUri = 'assets/bus.png';
 
   constructor(
     private vehicleService: VehicleService
