@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { of, Observable } from 'rxjs';
-import { FlatCoordinates } from 'src/app/models/flat-coordinates.model';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { VehicleService } from 'src/app/service/vehicle.service';
 import { Vehicle } from 'src/app/models/vehicle.model';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-map',
@@ -12,10 +11,7 @@ import { Vehicle } from 'src/app/models/vehicle.model';
 })
 export class MapComponent implements OnInit {
   public vehicles$: Observable<Vehicle[]>;
-  public isuCoords: FlatCoordinates = {
-    latitude: 42.027383,
-    longitude: -93.646497
-  };
+  public isuCoords: firebase.firestore.GeoPoint = new firebase.firestore.GeoPoint(42.027383, -93.646497);
   public iconUri = 'assets/bus.png';
 
   constructor(

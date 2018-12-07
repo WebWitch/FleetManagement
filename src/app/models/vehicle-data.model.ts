@@ -4,7 +4,7 @@
 export class VehicleData {
   timestamp: Date;
   speed: number;
-  gas: number;
+  gas_remaining: number;
   rpm: number;
   location: firebase.firestore.GeoPoint;
   longitude: number;
