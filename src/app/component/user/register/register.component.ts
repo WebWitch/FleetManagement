@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/service/auth.service';
-import { LoggerService } from 'src/app/service/logger.service';
+import { AuthService, LoggerService } from '@/services';
 
 @Component({
   selector: 'app-register',

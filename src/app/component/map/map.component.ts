@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { VehicleService } from 'src/app/service/vehicle.service';
-import { Vehicle } from 'src/app/models/vehicle.model';
-import * as firebase from 'firebase';
+import { VehicleService } from '@/services';
+import { Vehicle } from '@/models';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-map',

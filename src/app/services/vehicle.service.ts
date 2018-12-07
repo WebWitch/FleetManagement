@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { LoggerService } from './logger.service';
-import { HttpUtilsService } from './http-utils.service';
-import { Vehicle } from '../models/vehicle.model';
 import { tap, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+import { LoggerService } from './logger.service';
+import { HttpUtilsService } from './http-utils.service';
+import { Vehicle } from '@/models';
 
 @Injectable({
   providedIn: 'root'

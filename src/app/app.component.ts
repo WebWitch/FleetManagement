@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
-import { AuthService } from './service/auth.service';
+import { AuthService } from '@/services';
 import { Router } from '@angular/router';
 
 @Component({

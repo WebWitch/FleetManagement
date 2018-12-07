@@ -10,10 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { LoggerService } from './service/logger.service';
 import { MapComponent } from './component/map/map.component';
 import { AgmCoreModule } from '@agm/core';
-import { environment } from 'src/environments/environment';
+import { environment } from 'environments/environment';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { AngularFireModule } from '@angular/fire';
@@ -21,8 +20,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './component/user/login/login.component';
 import { RegisterComponent } from './component/user/register/register.component';
-import { AuthService } from './service/auth.service';
-import { AuthGuard } from './service/auth.guard';
+import { AuthGuard } from './helpers/auth.guard';
+import { AuthService, LoggerService } from '@/services';
 
 @NgModule({
   declarations: [
