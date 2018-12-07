@@ -19,7 +19,6 @@ export class DashboardComponent implements OnInit {
     ) { }
 
   managerNames: string[] = [];
-  sessionManager$: Observable<Manager>;
   private searchUsernames = new Subject<string>();
 
   ngOnInit() {
@@ -27,11 +26,6 @@ export class DashboardComponent implements OnInit {
       this.logger.log('DashboardComponent: Got managers', managers);
       this.managerNames = managers.map(manager => manager.username);
     });
-    this.sessionManager$ = this.searchUsernames.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((username: string) => this.findManager(username))
-    );
   }
 
   search(username: string): void {
@@ -39,6 +33,6 @@ export class DashboardComponent implements OnInit {
   }
 
   findManager(username: string) {
-    return this.managerService.getUsername(username);
+    // return this.managerService.getUsername(username);
   }
 }

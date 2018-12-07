@@ -20,7 +20,8 @@ export class ManagerListComponent implements OnInit {
   ngOnInit() {
     this.managers$ = this.searchTerms.pipe(
       debounceTime(300),
-      switchMap((term: string) => term.trim() ? this.managerService.searchManagers(term) : this.managerService.getAll())
+      distinctUntilChanged(),
+      switchMap((term: string) => term.trim() ? this.managerService.search(term) : this.managerService.getAll())
     );
   }
 

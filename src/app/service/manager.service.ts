@@ -1,107 +1,83 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { LoggerService } from './logger.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Manager } from '../models/manager.model';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap, first } from 'rxjs/operators';
-import { Vehicle } from '../models/vehicle.model';
+import { Observable } from 'rxjs';
+import { LoggerService } from './logger.service';
 import { HttpUtilsService } from './http-utils.service';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManagerService {
-  private url = environment.url + '/manager';
+
   constructor(
+    private db: AngularFirestore,
     private logger: LoggerService,
-    private http: HttpClient,
-    private httpUtilsService: HttpUtilsService
+    private util: HttpUtilsService
   ) { }
 
   /**
-   * GET managers from the server
+   * Create a new manager.
+   * @param username Unique username.
+   * @param password Plaintext password.
+   */
+  addManager(manager: Manager) {
+    const id = this.db.createId();
+    return this.db
+      .collection('managers')
+      .add({
+        id,
+        ...manager
+      });
+  }
+
+  /**
+   * Get all managers.
    */
   getAll(): Observable<Manager[]> {
-    return this.http.get<Manager[]>(this.url)
+    return this.db.collection<Manager>('managers').valueChanges()
       .pipe(
-        tap(() => this.logger.log('ManagerService: getAll()')),
-        catchError(this.httpUtilsService.handleError('getAll', []))
+        tap(_ => this.logger.log(`ManagerService: getAll()`)),
+        catchError(this.util.handleError('getAll', []))
       );
   }
 
   /**
-   * GET a user by username
-   * @param username Unique username
+   * Get manager by id.
+   * @param id The unique id.
    */
-  getUsername(username: string): Observable<Manager> {
-    return this.http.get<Manager>(this.url)
-      .pipe(
-        first(managers => managers.username === username),
-        tap(() => this.logger.log(`ManagerService: getUsername('${username}')`)),
-        catchError(this.httpUtilsService.handleError<Manager>('getUsername', null))
+  get(id: string): Observable<Manager|{}> {
+    return this.db.collection<Manager>('managers').doc(id)
+      .valueChanges().pipe(
+        tap(_ => this.logger.log(`ManagerService: get('${id}')`)),
+        catchError(this.util.handleError('get'))
       );
   }
 
   /**
-   * GET a list of managers by username (or partial username)
-   * @param term Name (or partial name) to search for
+   * Search for a username beginning with the term.
+   * @param term Term to search for.
    */
-  searchManagers(term: string): Observable<Manager[]> {
-    if (!term.trim()) {
-      return this.getAll();
-    }
-
-    return this.http.get<Manager[]>(this.url)
+  search(term: string): Observable<Manager[]> {
+    return this.db.collection<Manager>('managers', ref => ref.orderBy('username')
+        .startAt(term)
+        .endAt(term + '\uf8ff')
+      ).valueChanges()
       .pipe(
-        map(managers => managers.filter(manager => manager.username.includes(term))),
-        tap(() => this.logger.log(`ManagerService: searchManagers('${term}')`)),
-        catchError(this.httpUtilsService.handleError('getManagers', []))
+        tap(_ => this.logger.log(`ManagerService: search('${term}')`)),
+        catchError(this.util.handleError('search', []))
       );
   }
 
   /**
-   * PUT a new manager to the server
-   * @param username The manager's username.
-   * @param email The manager's email.
-   * @param password The manager's plaintext password.
+   * Update an existing manager to include new data.
+   * @param manager The manager to update.
    */
-  addManager(username: string, email: string, password: string): Observable<Manager> {
-    const manager = new Manager();
-    manager.username = username;
-    manager.email = email;
-    manager.password = password;
-
-    return this.http.put<Manager>(this.url, manager, httpOptions).pipe(
-      tap(() => this.logger.log(`ManagerService: added manager username=${manager.username}`)),
-      catchError(this.httpUtilsService.handleError<Manager>('addManager'))
-    );
-  }
-
-  /**
-   * GET the vehicles associated with a manager's username.
-   * @param username Manager username.
-   */
-  getManagerVehicles(manager: Manager): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>(this.url + '/' + manager.username).pipe(
-      tap(vehicles => this.logger.log(`ManagerService: got vehicles for manager=${manager.username}`, vehicles)),
-      catchError(this.httpUtilsService.handleError<Vehicle[]>('getManagerVehicles'))
-    );
-  }
-
-  /**
-   * PUT a vehicle uid to a manager to associate the two.
-   * @param manager Manager to associate a vehicle with.
-   * @param vehicle Vehicle to add to a manager.
-   */
-  associateVehicle(manager: Manager, vehicle: Vehicle): Observable<Vehicle[]> {
-    return this.http.put<Vehicle[]>(this.url + '/' + manager, vehicle.uid, httpOptions).pipe(
-      tap(() => this.logger.log(`ManagerService: added vehicle ${vehicle.uid} for manager=${manager.username}`)),
-      catchError(this.httpUtilsService.handleError<Vehicle[]>('associateVehicle'))
-    );
+  update(manager: Manager) {
+    return this.db.collection<Manager>('managers').doc(manager.id).set({
+      username: manager.username,
+      password: manager.password,
+    });
   }
 }

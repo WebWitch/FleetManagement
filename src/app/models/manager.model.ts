@@ -1,11 +1,8 @@
-import { ShadowVehicle } from './shadow-vehicle.model';
-
 /**
  * Represents a manager for the fleet.
  */
 export class Manager {
+  id: string;
   username: string;
   password: string;
-  email: string;
-  vehicles: ShadowVehicle[];
 }

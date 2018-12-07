@@ -16,13 +16,9 @@ import { MapComponent } from './component/map/map.component';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import { FormsModule } from '@angular/forms';
-import { RawDataReportComponent } from './component/raw/raw-data-report/raw-data-report.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AddComponent } from './component/manager/add/add.component';
-import { EditComponent } from './component/manager/edit/edit.component';
-import { ListComponent } from './component/manager/list/list.component';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AddManagerComponent } from './component/manager/add-manager/add-manager.component';
 import { EditManagerComponent } from './component/manager/edit-manager/edit-manager.component';
 
@@ -33,10 +29,6 @@ import { EditManagerComponent } from './component/manager/edit-manager/edit-mana
     ManagerListComponent,
     ManagerVehiclesComponent,
     MapComponent,
-    RawDataReportComponent,
-    AddComponent,
-    EditComponent,
-    ListComponent,
     AddManagerComponent,
     EditManagerComponent,
   ],
@@ -57,7 +49,7 @@ import { EditManagerComponent } from './component/manager/edit-manager/edit-mana
     FormsModule,
     MatMenuModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule
+    AngularFirestoreModule
   ],
   providers: [LoggerService],
   bootstrap: [AppComponent]
