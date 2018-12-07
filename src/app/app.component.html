@@ -5,10 +5,9 @@
 
       <button mat-button [matMenuTriggerFor]="menu">{{ title }}</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item routerLink="/home">Home</button>
         <button mat-menu-item routerLink="/map">Map</button>
-        <button mat-menu-item routerLink="/manager">Managers</button>
-        <button mat-menu-item routerLink="/raw">Raw Data</button>
+        <button mat-menu-item routerLink="/login">Login</button>
+        <button mat-menu-item (click)="logout()">Log Out</button>
       </mat-menu>
   </span>
   <span *ngIf="env">Environment: {{ env | uppercase }}</span>

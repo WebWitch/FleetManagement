@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './component/dashboard/dashboard.component';
-import { ManagerListComponent } from './component/manager/manager-list/manager-list.component';
 import { MapComponent } from './component/map/map.component';
+import { LoginComponent } from './component/user/login/login.component';
+import { RegisterComponent } from './component/user/register/register.component';
+import { AuthGuard } from './service/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: DashboardComponent },
-  { path: 'manager', component: ManagerListComponent },
-  { path: 'map', component: MapComponent }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'map', component: MapComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent }
 ];
 
 @NgModule({

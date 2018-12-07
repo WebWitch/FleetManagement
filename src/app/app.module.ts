@@ -3,15 +3,14 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule, MatButtonModule, MatGridListModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoggerService } from './service/logger.service';
-import { ManagerListComponent } from './component/manager/manager-list/manager-list.component';
-import { ManagerVehiclesComponent } from './component/manager/manager-vehicles/manager-vehicles.component';
 import { MapComponent } from './component/map/map.component';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
@@ -19,18 +18,18 @@ import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AddManagerComponent } from './component/manager/add-manager/add-manager.component';
-import { EditManagerComponent } from './component/manager/edit-manager/edit-manager.component';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from './component/user/login/login.component';
+import { RegisterComponent } from './component/user/register/register.component';
+import { AuthService } from './service/auth.service';
+import { AuthGuard } from './service/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
-    ManagerListComponent,
-    ManagerVehiclesComponent,
     MapComponent,
-    AddManagerComponent,
-    EditManagerComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +41,8 @@ import { EditManagerComponent } from './component/manager/edit-manager/edit-mana
     MatIconModule,
     MatButtonModule,
     MatGridListModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: environment.keys.agm
@@ -49,9 +50,10 @@ import { EditManagerComponent } from './component/manager/edit-manager/edit-mana
     FormsModule,
     MatMenuModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
-  providers: [LoggerService],
+  providers: [AuthGuard, AuthService, LoggerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

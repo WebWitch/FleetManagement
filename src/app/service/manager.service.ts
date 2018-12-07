@@ -22,13 +22,14 @@ export class ManagerService {
    * @param username Unique username.
    * @param password Plaintext password.
    */
-  addManager(manager: Manager) {
+  addManager(username: string, password: string) {
     const id = this.db.createId();
     return this.db
       .collection('managers')
       .add({
         id,
-        ...manager
+        username,
+        password
       });
   }
 
@@ -47,12 +48,12 @@ export class ManagerService {
    * Get manager by id.
    * @param id The unique id.
    */
-  get(id: string): Observable<Manager|{}> {
+  get(id: string): Observable<Manager> {
     return this.db.collection<Manager>('managers').doc(id)
       .valueChanges().pipe(
-        tap(_ => this.logger.log(`ManagerService: get('${id}')`)),
-        catchError(this.util.handleError('get'))
-      );
+        tap(_ => this.logger.log(`ManagerService: getAll()`)),
+        catchError(this.util.handleError('getAll'))
+      ) as Observable<Manager>;
   }
 
   /**
