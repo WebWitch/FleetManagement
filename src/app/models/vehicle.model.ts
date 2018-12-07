@@ -5,7 +5,6 @@ import { VehicleData } from './vehicle-data.model';
  */
 export class Vehicle {
   id: string;
-  managers: string[];
   gas_capacity: number;
   most_recent_datapoint: VehicleData;
   data: VehicleData[];

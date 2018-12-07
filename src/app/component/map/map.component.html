@@ -1,7 +1,27 @@
 <agm-map [latitude]="isuCoords.latitude" [longitude]="isuCoords.longitude" [zoom]="15">
-  <agm-marker *ngFor="let loc of coordinates$ | async"
-    [latitude]="loc.latitude"
-    [longitude]="loc.longitude">
-    <agm-info-window>ISU</agm-info-window>
+  <agm-marker *ngFor="let vehicle of vehicles$ | async"
+    [latitude]="vehicle.most_recent_datapoint.location.latitude"
+    [longitude]="vehicle.most_recent_datapoint.location.longitude"
+    [iconUrl]="iconUri">
+    <agm-info-window>
+      <ul>
+        <li>
+          ID: {{ vehicle.id }}
+        </li>
+        <li>
+          Speed: {{ vehicle.most_recent_datapoint.speed }} mph
+        </li>
+        <li>
+          RPM: {{ vehicle.most_recent_datapoint.rpm }}
+        </li>
+        <li>
+          Gas: {{ vehicle.most_recent_datapoint.gas }} / {{ vehicle.gas_capacity }} gallons
+        </li>
+      </ul>
+    </agm-info-window>
   </agm-marker>
 </agm-map>
+<div class="right-side">
+  <h2>Raw Data</h2>
+  <pre>{{ vehicles$ | async | json }}</pre>
+</div>

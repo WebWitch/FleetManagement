@@ -30,12 +30,11 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(this.user.email, this.user.password)
       .then(res => {
         this.logger.log('Logged in', res);
-        this.router.navigate(['/']);
       }).catch(err => this.logger.error(err))
       .finally(() => this.showSpinner = false);
   }
 
   register() {
-    this.router.navigate(['register']);
+    this.router.navigate(['/register']);
   }
 }

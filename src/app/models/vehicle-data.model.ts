@@ -5,6 +5,8 @@ export class VehicleData {
   timestamp: Date;
   speed: number;
   gas: number;
+  rpm: number;
+  location: firebase.firestore.GeoPoint;
   longitude: number;
   latitude: number;
 }

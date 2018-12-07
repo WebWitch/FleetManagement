@@ -33,8 +33,6 @@ export class RegisterComponent implements OnInit {
 
     this.authService.register(this.email, this.password).then(res => {
       this.logger.log('Registered', res);
-      this.router.navigate(['/']);
     }).catch(err => this.logger.error(err)).finally(() => this.showSpinner = false);
-    this.router.navigate(['home']);
   }
 }

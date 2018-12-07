@@ -35,12 +35,13 @@ export class AuthService {
   async signIn(email: string, password: string) {
     const credential = firebase.auth.EmailAuthProvider.credential(email, password);
     const success = await this._firebaseAuth.auth.signInAndRetrieveDataWithCredential(credential);
-    this.loggerService.log('Wow.', success.user);
+    this.router.navigate(['/map']);
     return this.userDetails = success.user;
   }
 
   async register(email: string, password: string) {
     const success = await this._firebaseAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, password);
+    this.router.navigate(['/map']);
     return this.userDetails = success.user;
   }
 

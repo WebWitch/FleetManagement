@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
-import { Observable } from 'rxjs';
 import { AuthService } from './service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,10 @@ import { AuthService } from './service/auth.service';
 export class AppComponent {
   title = 'Fleet Management';
   env = environment.production ? null : environment.environment;
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
   logout() {
     this.authService.logout();
   }
