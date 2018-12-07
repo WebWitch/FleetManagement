@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   environment: 'dev',
-  url: 'http://localhost:8080',
   keys: {
     agm: 'AIzaSyAg8rOLrM2S_AZljmBoOtfAGLK8UTRpY0c'
   },
