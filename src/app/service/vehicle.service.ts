@@ -31,6 +31,7 @@ export class VehicleService {
 
   /**
    * Get all vehicles.
+   * @todo Bind this to the logged-in user.
    */
   getAll(): Observable<Vehicle[]> {
     return this.db.collection<Vehicle>('vehicles').valueChanges().pipe(
@@ -39,6 +40,10 @@ export class VehicleService {
     );
   }
 
+  /**
+   * Get a vehicle based on the document id.
+   * @param id The vehicle's document id.
+   */
   get(id: string): Observable<Vehicle|{}> {
     return this.db.collection<Vehicle>('vehicles').doc(id)
       .valueChanges().pipe(
@@ -47,6 +52,11 @@ export class VehicleService {
       );
   }
 
+  /**
+   * Update a vehicle. It should include a document id for the update to succeed.
+   * @param vehicle The fully-qualified vehicle to update, it will be replaced in the database.
+   * @todo Find a better way to update. This seems sloppy.
+   */
   update(vehicle: Vehicle) {
     return this.db.collection<Vehicle>('vehicles')
       .doc(vehicle.id)
