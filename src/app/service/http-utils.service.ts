@@ -20,7 +20,7 @@ export class HttpUtilsService {
   public handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       this.logger.error(error);
-      this.logger.log(`ManagerService: ${operation} failed: ${error.message}`);
+      this.logger.log(`${operation} failed: ${error.message}`);
 
       return of(result as T);
     };

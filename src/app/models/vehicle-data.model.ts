@@ -2,9 +2,11 @@
  * Represents a single log from a vehicle at a fixed point in time.
  */
 export class VehicleData {
-  date: Date;
+  timestamp: Date;
   speed: number;
   gas: number;
+  rpm: number;
+  location: firebase.firestore.GeoPoint;
   longitude: number;
   latitude: number;
 }

@@ -3,32 +3,33 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule, MatButtonModule, MatGridListModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoggerService } from './service/logger.service';
-import { ManagerListComponent } from './component/manager/manager-list/manager-list.component';
-import { ManagerVehiclesComponent } from './component/manager/manager-vehicles/manager-vehicles.component';
 import { MapComponent } from './component/map/map.component';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RawDataReportComponent } from './component/raw/raw-data-report/raw-data-report.component';
+import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
-import { ManagerAddComponent } from './component/manager/manager-add/manager-add.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from './component/user/login/login.component';
+import { RegisterComponent } from './component/user/register/register.component';
+import { AuthService } from './service/auth.service';
+import { AuthGuard } from './service/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
-    ManagerListComponent,
-    ManagerVehiclesComponent,
     MapComponent,
-    RawDataReportComponent,
-    ManagerAddComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,15 +41,19 @@ import { ManagerAddComponent } from './component/manager/manager-add/manager-add
     MatIconModule,
     MatButtonModule,
     MatGridListModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: environment.keys.agm
     }),
     FormsModule,
     MatMenuModule,
-    ReactiveFormsModule
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
-  providers: [LoggerService],
+  providers: [AuthGuard, AuthService, LoggerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
