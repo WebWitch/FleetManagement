@@ -14,26 +14,12 @@ Data is stored in a [Firebase](https://firebase.google.com/) Firestore using API
 
 Map is created and managed with [AGM](https://angular-maps.com/).
 
-Live demo available on [Firebase Hosting](https://se339-fleet-management.firebaseapp.com/).
+Live demo available on [Firebase Hosting](https://se339-fleet-management.firebaseapp.com/). It implements a remedial authentication system via Firebase Authentication, then displays a map of vehicles that have been added to Firebase. These vehicles automatically update on the map when the database changes, which occurs when a Raspberry Pi client writes new data from a vehicle's ODB port.
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-
